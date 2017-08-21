@@ -1,0 +1,21 @@
+{
+    "name": "mcmatters/lumen-console-commands",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Borzyonok",
+            "email": "dima.matters@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": "^5.4",
+        "illuminate/console": "^5.4",
+        "laravel/lumen-framework": "^5.4",
+        "vlucas/phpdotenv": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "McMatters\\LumenConsoleCommands\\": "src/"
+        }
+    }
+}
