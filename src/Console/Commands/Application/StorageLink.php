@@ -53,7 +53,7 @@ class StorageLink extends Command
      */
     public function handle()
     {
-        $publicPath = $this->app->basePath('public');
+        $publicPath = $this->app->basePath('public/storage');
 
         if (file_exists($publicPath)) {
             $this->error('The "public/storage" directory already exists.');
