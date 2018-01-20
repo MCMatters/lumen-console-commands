@@ -9,11 +9,11 @@ use Laravel\Lumen\Application;
 use function glob, is_file, preg_quote, unlink;
 
 /**
- * Class Clear
+ * Class ClearCommand
  *
  * @package McMatters\LumenConsoleCommands\Console\Commands\View
  */
-class Clear extends Command
+class ClearCommand extends Command
 {
     /**
      * @var string

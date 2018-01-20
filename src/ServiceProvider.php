@@ -5,9 +5,10 @@ declare(strict_types = 1);
 namespace McMatters\LumenConsoleCommands;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use McMatters\LumenConsoleCommands\Console\Commands\Application\KeyGenerate;
-use McMatters\LumenConsoleCommands\Console\Commands\Application\StorageLink;
-use McMatters\LumenConsoleCommands\Console\Commands\View\Clear as ViewClear;
+use McMatters\LumenConsoleCommands\Console\Commands\{
+    Application\KeyGenerateCommand, Application\StorageLinkCommand,
+    Route\ListCommand as RouteListCommand, View\ClearCommand as ViewClearCommand
+};
 use const false;
 use function is_dir, mkdir;
 
@@ -40,21 +41,28 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->singleton(
             'command.lumen-console-commands.key-generate',
             function ($app) {
-                return new KeyGenerate($app);
+                return new KeyGenerateCommand($app);
             }
         );
 
         $this->app->singleton(
             'command.lumen-console-commands.storage-link',
             function ($app) {
-                return new StorageLink($app);
+                return new StorageLinkCommand($app);
             }
         );
 
         $this->app->singleton(
             'command.lumen-console-commands.view-clear',
             function ($app) {
-                return new ViewClear($app);
+                return new ViewClearCommand($app);
+            }
+        );
+
+        $this->app->singleton(
+            'command.lumen-console-commands.route-list',
+            function ($app) {
+                return new RouteListCommand($app);
             }
         );
 
@@ -62,6 +70,7 @@ class ServiceProvider extends BaseServiceProvider
             'command.lumen-console-commands.key-generate',
             'command.lumen-console-commands.storage-link',
             'command.lumen-console-commands.view-clear',
+            'command.lumen-console-commands.route-list',
         ]);
     }
 

@@ -14,11 +14,11 @@ use function base64_encode, env, file_exists, file_get_contents,
     file_put_contents, preg_replace, preg_quote, random_bytes;
 
 /**
- * Class KeyGenerate
+ * Class KeyGenerateCommand
  *
  * @package McMatters\LumenConsoleCommands\Console\Commands\Application
  */
-class KeyGenerate extends Command
+class KeyGenerateCommand extends Command
 {
     use ConfirmableTrait;
 
@@ -35,15 +35,15 @@ class KeyGenerate extends Command
     protected $app;
 
     /**
-     * KeyGenerate constructor.
+     * KeyGenerateCommand constructor.
      *
      * @param Application $app
      */
     public function __construct(Application $app)
     {
-        $this->app = $app;
-
         parent::__construct();
+
+        $this->app = $app;
     }
 
     /**

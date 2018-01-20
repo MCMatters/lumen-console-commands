@@ -7,13 +7,14 @@ namespace McMatters\LumenConsoleCommands\Console\Commands\Application;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Laravel\Lumen\Application;
+use function file_exists;
 
 /**
- * Class StorageLink
+ * Class StorageLinkCommand
  *
  * @package McMatters\LumenConsoleCommands\Console\Commands\Application
  */
-class StorageLink extends Command
+class StorageLinkCommand extends Command
 {
     /**
      * @var string
@@ -36,16 +37,16 @@ class StorageLink extends Command
     protected $files;
 
     /**
-     * StorageLink constructor.
+     * StorageLinkCommand constructor.
      *
      * @param Application $app
      */
     public function __construct(Application $app)
     {
+        parent::__construct();
+
         $this->app = $app;
         $this->files = $app->make('files');
-
-        parent::__construct();
     }
 
     /**
