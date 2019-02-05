@@ -8,9 +8,12 @@
         }
     ],
     "require": {
-        "illuminate/support": "^5.5",
+        "php": ">=7.0",
         "illuminate/console": "^5.5",
+        "illuminate/filesystem": "^5.5",
+        "illuminate/support": "^5.5",
         "laravel/lumen-framework": "^5.5",
+        "mcmatters/lumen-helpers": "dev-master",
         "vlucas/phpdotenv": "^2.4"
     },
     "autoload": {

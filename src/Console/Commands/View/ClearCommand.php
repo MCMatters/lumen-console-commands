@@ -21,20 +21,20 @@ class ClearCommand extends Command
     protected $signature = 'view:clear';
 
     /**
-     * @var Application
+     * @var \Laravel\Lumen\Application
      */
     protected $app;
 
     /**
      * Clear constructor.
      *
-     * @param Application $app
+     * @param \Laravel\Lumen\Application $app
      */
     public function __construct(Application $app)
     {
-        $this->app = $app;
-
         parent::__construct();
+
+        $this->app = $app;
     }
 
     /**

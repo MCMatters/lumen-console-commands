@@ -6,11 +6,12 @@ namespace McMatters\LumenConsoleCommands;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use McMatters\LumenConsoleCommands\Console\Commands\{
-    Application\KeyGenerateCommand, Application\StorageLinkCommand,
-    Route\ListCommand as RouteListCommand, View\ClearCommand as ViewClearCommand
+    Application\DownCommand, Application\KeyGenerateCommand,
+    Application\StorageLinkCommand, Application\UpCommand,
+    Route\ListCommand as RouteListCommand, View\CacheCommand as ViewCacheCommand,
+    View\ClearCommand as ViewClearCommand
 };
-use const false;
-use function is_dir, mkdir;
+use McMatters\LumenConsoleCommands\Managers\MaintenanceModeManager;
 
 /**
  * Class ServiceProvider
@@ -24,19 +25,34 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-        if (($configPath = $this->getConfigPath()) === false) {
-            return;
-        }
-
-        $this->publishes([
-            __DIR__.'/../config/console-commands.php' => "{$configPath}/console-commands.php",
-        ]);
+        $this->app->configure('console-commands');
     }
 
     /**
      * @return void
      */
     public function register()
+    {
+        $this->registerManagers();
+        $this->registerApplicationCommands();
+        $this->registerRouteCommands();
+        $this->registerViewCommands();
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerManagers()
+    {
+        $this->app->singleton(MaintenanceModeManager::class, function ($app) {
+            return $app->make(MaintenanceModeManager::class);
+        });
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerApplicationCommands()
     {
         $this->app->singleton(
             'command.lumen-console-commands.key-generate',
@@ -53,38 +69,63 @@ class ServiceProvider extends BaseServiceProvider
         );
 
         $this->app->singleton(
-            'command.lumen-console-commands.view-clear',
+            'command.lumen-console-commands.down',
             function ($app) {
-                return new ViewClearCommand($app);
+                return new DownCommand($app->make(MaintenanceModeManager::class));
             }
         );
 
+        $this->app->singleton(
+            'command.lumen-console-commands.up',
+            function ($app) {
+                return new UpCommand($app->make(MaintenanceModeManager::class));
+            }
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerRouteCommands()
+    {
         $this->app->singleton(
             'command.lumen-console-commands.route-list',
             function ($app) {
                 return new RouteListCommand($app);
             }
         );
-
-        $this->commands([
-            'command.lumen-console-commands.key-generate',
-            'command.lumen-console-commands.storage-link',
-            'command.lumen-console-commands.view-clear',
-            'command.lumen-console-commands.route-list',
-        ]);
     }
 
     /**
-     * @return bool|string
+     * @return void
      */
-    protected function getConfigPath()
+    protected function registerViewCommands()
     {
-        $path = $this->app->basePath().DIRECTORY_SEPARATOR.'config';
+        $this->app->singleton(
+            'command.lumen-console-commands.view-cache',
+            function ($app) {
+                return new ViewCacheCommand($app);
+            }
+        );
 
-        if (!is_dir($path) && !@mkdir($path, 0755)) {
-            return false;
-        }
+        $this->app->singleton(
+            'command.lumen-console-commands.view-clear',
+            function ($app) {
+                return new ViewClearCommand($app);
+            }
+        );
+    }
 
-        return $path;
+    protected function registerCommands()
+    {
+        $this->commands([
+            'command.lumen-console-commands.down',
+            'command.lumen-console-commands.key-generate',
+            'command.lumen-console-commands.storage-link',
+            'command.lumen-console-commands.up',
+            'command.lumen-console-commands.route-list',
+            'command.lumen-console-commands.view-cache',
+            'command.lumen-console-commands.view-clear',
+        ]);
     }
 }

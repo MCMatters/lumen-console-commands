@@ -30,25 +30,32 @@ class KeyGenerateCommand extends Command
         {--force : Force the operation to run when in production}';
 
     /**
-     * @var Application
+     * @var \Laravel\Lumen\Application
      */
     protected $app;
 
     /**
+     * @var \Illuminate\Config\Repository
+     */
+    protected $config;
+
+    /**
      * KeyGenerateCommand constructor.
      *
-     * @param Application $app
+     * @param \Laravel\Lumen\Application $app
      */
     public function __construct(Application $app)
     {
         parent::__construct();
 
         $this->app = $app;
+        $this->config = $app->make('config');
     }
 
     /**
      * @return void
-     * @throws FileNotFoundException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \Exception
      */
     public function handle()
     {
@@ -77,10 +84,11 @@ class KeyGenerateCommand extends Command
 
     /**
      * @return string
+     * @throws \Exception
      */
     protected function generateKey(): string
     {
-        $bytes = $this->app['config']->get('app.cipher') === 'AES-128-CBC'
+        $bytes = $this->config->get('app.cipher') === 'AES-128-CBC'
             ? 16
             : 32;
 
@@ -130,7 +138,7 @@ class KeyGenerateCommand extends Command
      */
     protected function getCurrentKey()
     {
-        return env('APP_KEY', $this->app['config']->get('app.key'));
+        return env('APP_KEY', $this->config->get('app.key'));
     }
 
     /**
@@ -139,7 +147,7 @@ class KeyGenerateCommand extends Command
      */
     protected function getEnvironmentFile(): string
     {
-        $file = $this->app['config']->get(
+        $file = $this->config->get(
             'lumen-commands.env',
             $this->app->basePath().DIRECTORY_SEPARATOR.'.env'
         );
@@ -158,7 +166,8 @@ class KeyGenerateCommand extends Command
      */
     protected function updateAppKey(string $key)
     {
-        $this->app['config']->set('app.key', $key);
+        $this->config->set('app.key', $key);
+
         (new Loader($this->getEnvironmentFile(), true))->setEnvironmentVariable(
             'APP_KEY',
             $key

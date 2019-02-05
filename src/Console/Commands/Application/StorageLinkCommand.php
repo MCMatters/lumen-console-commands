@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace McMatters\LumenConsoleCommands\Console\Commands\Application;
 
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
 use Laravel\Lumen\Application;
 use function file_exists;
 
@@ -27,19 +26,19 @@ class StorageLinkCommand extends Command
     protected $description = 'Create a symbolic link from "public/storage" to "storage/app/public"';
 
     /**
-     * @var Application
+     * @var \Laravel\Lumen\Application
      */
     protected $app;
 
     /**
-     * @var Filesystem
+     * @var \Illuminate\Filesystem\Filesystem
      */
     protected $files;
 
     /**
      * StorageLinkCommand constructor.
      *
-     * @param Application $app
+     * @param \Laravel\Lumen\Application $app
      */
     public function __construct(Application $app)
     {
