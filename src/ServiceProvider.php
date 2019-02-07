@@ -33,21 +33,10 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->registerManagers();
         $this->registerApplicationCommands();
         $this->registerRouteCommands();
         $this->registerViewCommands();
         $this->registerCommands();
-    }
-
-    /**
-     * @return void
-     */
-    protected function registerManagers()
-    {
-        $this->app->singleton(MaintenanceModeManager::class, function ($app) {
-            return $app->make(MaintenanceModeManager::class);
-        });
     }
 
     /**
@@ -72,14 +61,14 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->singleton(
             'command.lumen-console-commands.down',
             function ($app) {
-                return new DownCommand($app->make(MaintenanceModeManager::class));
+                return new DownCommand(new MaintenanceModeManager($app));
             }
         );
 
         $this->app->singleton(
             'command.lumen-console-commands.up',
             function ($app) {
-                return new UpCommand($app->make(MaintenanceModeManager::class));
+                return new UpCommand(new MaintenanceModeManager($app));
             }
         );
     }
@@ -117,16 +106,21 @@ class ServiceProvider extends BaseServiceProvider
         );
     }
 
+    /**
+     * @return void
+     */
     protected function registerCommands()
     {
-        $this->commands([
-            'command.lumen-console-commands.down',
-            'command.lumen-console-commands.key-generate',
-            'command.lumen-console-commands.storage-link',
-            'command.lumen-console-commands.up',
-            'command.lumen-console-commands.route-list',
-            'command.lumen-console-commands.view-cache',
-            'command.lumen-console-commands.view-clear',
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                DownCommand::class,
+                KeyGenerateCommand::class,
+                StorageLinkCommand::class,
+                UpCommand::class,
+                RouteListCommand::class,
+                ViewCacheCommand::class,
+                ViewClearCommand::class,
+            ]);
+        }
     }
 }
