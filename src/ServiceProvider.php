@@ -37,6 +37,7 @@ class ServiceProvider extends BaseServiceProvider
         $this->registerApplicationCommands();
         $this->registerRouteCommands();
         $this->registerViewCommands();
+        $this->registerCommands();
     }
 
     /**
