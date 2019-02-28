@@ -8,8 +8,8 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use McMatters\LumenConsoleCommands\Console\Commands\{
     Application\DownCommand, Application\KeyGenerateCommand,
     Application\StorageLinkCommand, Application\UpCommand,
-    Route\ListCommand as RouteListCommand, View\CacheCommand as ViewCacheCommand,
-    View\ClearCommand as ViewClearCommand
+    Route\ListCommand as RouteListCommand, Vendor\PublishCommand,
+    View\CacheCommand as ViewCacheCommand, View\ClearCommand as ViewClearCommand
 };
 use McMatters\LumenConsoleCommands\Managers\MaintenanceModeManager;
 
@@ -35,6 +35,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->registerApplicationCommands();
         $this->registerRouteCommands();
+        $this->registerVendorCommands();
         $this->registerViewCommands();
         $this->registerCommands();
     }
@@ -89,6 +90,19 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * @return void
      */
+    protected function registerVendorCommands()
+    {
+        $this->app->singleton(
+            'command.lumen-console-commands.vendor-publish',
+            function ($app) {
+                return new PublishCommand($app->make('files'));
+            }
+        );
+    }
+
+    /**
+     * @return void
+     */
     protected function registerViewCommands()
     {
         $this->app->singleton(
@@ -118,6 +132,7 @@ class ServiceProvider extends BaseServiceProvider
                 StorageLinkCommand::class,
                 UpCommand::class,
                 RouteListCommand::class,
+                PublishCommand::class,
                 ViewCacheCommand::class,
                 ViewClearCommand::class,
             ]);
