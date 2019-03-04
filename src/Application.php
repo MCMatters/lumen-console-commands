@@ -6,6 +6,8 @@ namespace McMatters\LumenConsoleCommands;
 
 use Laravel\Lumen\Application as BaseApplication;
 use McMatters\LumenConsoleCommands\Managers\MaintenanceModeManager;
+use const false, true;
+use function file_exists;
 
 /**
  * Class Application
@@ -50,7 +52,8 @@ class Application extends BaseApplication
      */
     public function getCachedConfigPath(): string
     {
-        return $this->make('config')->get('console-commands.cache.config');
+        return $_ENV['APP_CONFIG_CACHE'] ??
+            $this->make('config')->get('console-commands.cache.config');
     }
 
     /**
@@ -59,5 +62,25 @@ class Application extends BaseApplication
     public function configurationIsCached(): bool
     {
         return file_exists($this->getCachedConfigPath());
+    }
+
+    /**
+     * @return bool
+     */
+    public function loadCachedConfiguration(): bool
+    {
+        if ($this->configurationIsCached()) {
+            $configuration = require $this->getCachedConfigPath();
+
+            foreach ($configuration as $key => $data) {
+                $this->loadedConfigurations[$key] = true;
+            }
+
+            $this->make('config')->set($configuration);
+
+            return true;
+        }
+
+        return false;
     }
 }
