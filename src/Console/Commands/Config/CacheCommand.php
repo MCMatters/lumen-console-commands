@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace McMatters\LumenConsoleCommands\Console\Commands\Config;
 
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Laravel\Lumen\Application;
 use LogicException;
@@ -45,7 +45,7 @@ class CacheCommand extends Command
      * CacheCommand constructor.
      *
      * @param \Laravel\Lumen\Application $app
-     * @param \Illuminate\Contracts\Filesystem\Filesystem $files
+     * @param \Illuminate\Filesystem\Filesystem $files
      */
     public function __construct(Application $app, Filesystem $files)
     {
