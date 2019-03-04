@@ -148,7 +148,7 @@ class KeyGenerateCommand extends Command
     protected function getEnvironmentFile(): string
     {
         $file = $this->config->get(
-            'lumen-commands.env',
+            'console-commands.env',
             $this->app->basePath().DIRECTORY_SEPARATOR.'.env'
         );
 

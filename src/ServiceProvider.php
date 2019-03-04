@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use McMatters\LumenConsoleCommands\Console\Commands\{
     Application\DownCommand, Application\KeyGenerateCommand,
     Application\StorageLinkCommand, Application\UpCommand,
+    Config\CacheCommand as ConfigCacheCommand, Config\ClearCommand as ConfigClearCommand,
     Route\ListCommand as RouteListCommand, Vendor\PublishCommand,
     View\CacheCommand as ViewCacheCommand, View\ClearCommand as ViewClearCommand
 };
@@ -34,6 +35,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->registerApplicationCommands();
+        $this->registerConfigCommands();
         $this->registerRouteCommands();
         $this->registerVendorCommands();
         $this->registerViewCommands();
@@ -70,6 +72,26 @@ class ServiceProvider extends BaseServiceProvider
             'command.lumen-console-commands.up',
             function ($app) {
                 return new UpCommand(new MaintenanceModeManager($app));
+            }
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerConfigCommands()
+    {
+        $this->app->singleton(
+            'command.lumen-console-commands.config-cache',
+            function ($app) {
+                return new ConfigCacheCommand($app, $app->make('files'));
+            }
+        );
+
+        $this->app->singleton(
+            'command.lumen-console-commands.config-clear',
+            function ($app) {
+                return new ConfigClearCommand($app, $app->make('files'));
             }
         );
     }
@@ -131,6 +153,8 @@ class ServiceProvider extends BaseServiceProvider
                 KeyGenerateCommand::class,
                 StorageLinkCommand::class,
                 UpCommand::class,
+                ConfigCacheCommand::class,
+                ConfigClearCommand::class,
                 RouteListCommand::class,
                 PublishCommand::class,
                 ViewCacheCommand::class,
