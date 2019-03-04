@@ -1,0 +1,9 @@
+<?php
+
+declare(strict_types = 1);
+
+$routes = {{routes}};
+
+foreach ($routes as $route) {
+    $app->router->addRoute($route['method'], $route['uri'], $route['action']);
+}

@@ -83,4 +83,21 @@ class Application extends BaseApplication
 
         return false;
     }
+
+    /**
+     * @return string
+     */
+    public function getCachedRoutesPath(): string
+    {
+        return $_ENV['APP_ROUTES_CACHE'] ??
+            $this->make('config')->get('console-commands.cache.routes');
+    }
+
+    /**
+     * @return bool
+     */
+    public function routesAreCached(): bool
+    {
+        return file_exists($this->getCachedRoutesPath());
+    }
 }

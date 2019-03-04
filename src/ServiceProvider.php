@@ -9,6 +9,7 @@ use McMatters\LumenConsoleCommands\Console\Commands\{
     Application\DownCommand, Application\KeyGenerateCommand,
     Application\StorageLinkCommand, Application\UpCommand,
     Config\CacheCommand as ConfigCacheCommand, Config\ClearCommand as ConfigClearCommand,
+    Route\CacheCommand as RouteCacheCommand, Route\ClearCommand as RouteClearCommand,
     Route\ListCommand as RouteListCommand, Vendor\PublishCommand,
     View\CacheCommand as ViewCacheCommand, View\ClearCommand as ViewClearCommand
 };
@@ -102,6 +103,20 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerRouteCommands()
     {
         $this->app->singleton(
+            'command.lumen-console-commands.route-cache',
+            function ($app) {
+                return new RouteCacheCommand($app);
+            }
+        );
+
+        $this->app->singleton(
+            'command.lumen-console-commands.route-clear',
+            function ($app) {
+                return new RouteClearCommand($app);
+            }
+        );
+
+        $this->app->singleton(
             'command.lumen-console-commands.route-list',
             function ($app) {
                 return new RouteListCommand($app);
@@ -155,6 +170,8 @@ class ServiceProvider extends BaseServiceProvider
                 UpCommand::class,
                 ConfigCacheCommand::class,
                 ConfigClearCommand::class,
+                RouteCacheCommand::class,
+                RouteClearCommand::class,
                 RouteListCommand::class,
                 PublishCommand::class,
                 ViewCacheCommand::class,

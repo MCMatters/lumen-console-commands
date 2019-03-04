@@ -8,5 +8,6 @@ return [
 
     'cache' => [
         'config' => storage_path('framework/cache/config.php'),
+        'routes' => storage_path('framework/cache/routes.php'),
     ],
 ];
