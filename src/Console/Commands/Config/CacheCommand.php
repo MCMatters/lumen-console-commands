@@ -63,7 +63,7 @@ class CacheCommand extends Command
     {
         $this->call('config:clear');
 
-        $config = $this->app->make('config')->all();
+        $config = $this->getFreshConfiguration();
         $configPath = Arr::get($config, 'console-commands.cache.config');
 
         $this->files->put(
@@ -80,5 +80,15 @@ class CacheCommand extends Command
         }
 
         $this->info('Configuration cached successfully!');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFreshConfiguration(): array
+    {
+        $app = require $this->app->basePath().'/bootstrap/app.php';
+
+        return $app->make('config')->all();
     }
 }
