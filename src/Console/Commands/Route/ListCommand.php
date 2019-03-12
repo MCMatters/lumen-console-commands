@@ -9,7 +9,7 @@ use Laravel\Lumen\Application;
 use McMatters\LumenHelpers\RouteHelper;
 use Symfony\Component\Console\Input\InputOption;
 use const null;
-use function array_filter, array_map, implode;
+use function array_filter, array_map, implode, is_array;
 
 /**
  * Class ListCommand
@@ -73,7 +73,7 @@ class ListCommand extends Command
         );
 
         return array_map(function (array $route) {
-            if (!empty($route['middleware'])) {
+            if (is_array($route['middleware'])) {
                 $route['middleware'] = implode(',', $route['middleware']);
             }
 
