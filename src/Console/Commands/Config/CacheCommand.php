@@ -88,7 +88,7 @@ class CacheCommand extends Command
     protected function getFreshConfiguration(): array
     {
         $app = require $this->app->basePath().'/bootstrap/app.php';
-        $app->run();
+        $app->boot();
 
         return $app->make('config')->all();
     }

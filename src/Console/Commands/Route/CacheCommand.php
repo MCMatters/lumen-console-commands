@@ -79,7 +79,7 @@ class CacheCommand extends Command
     protected function getRoutes(): array
     {
         $app = require $this->app->basePath().'/bootstrap/app.php';
-        $app->run();
+        $app->boot();
 
         $routes = $app->router->getRoutes();
 
