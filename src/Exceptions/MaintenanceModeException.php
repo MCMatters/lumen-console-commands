@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Exceptions;
 
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
+
 use const null;
 
 /**

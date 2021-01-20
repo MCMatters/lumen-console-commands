@@ -1,11 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\View;
 
 use Illuminate\Console\Command;
 use Laravel\Lumen\Application;
+
 use function glob, is_file, preg_quote, unlink;
 
 /**
@@ -40,7 +41,7 @@ class ClearCommand extends Command
     /**
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $path = $this->app->storagePath('framework/views');
 

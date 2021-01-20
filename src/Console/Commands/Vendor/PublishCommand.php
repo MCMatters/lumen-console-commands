@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\Vendor;
 
@@ -11,8 +11,10 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\Adapter\Local as LocalAdapter;
-use const null, true;
+
 use function array_merge, dirname, explode, preg_filter, realpath, strip_tags, str_replace;
+
+use const null, true;
 
 /**
  * Class PublishCommand
@@ -64,11 +66,12 @@ class PublishCommand extends Command
 
     /**
      * @return void
+     *
      * @throws \InvalidArgumentException
      * @throws \League\Flysystem\FilesystemNotFoundException
      * @throws \LogicException
      */
-    public function handle()
+    public function handle(): void
     {
         $this->determineWhatShouldBePublished();
 
@@ -82,13 +85,13 @@ class PublishCommand extends Command
     /**
      * @return void
      */
-    protected function determineWhatShouldBePublished()
+    protected function determineWhatShouldBePublished(): void
     {
         if ($this->option('all')) {
             return;
         }
 
-        list($this->provider, $this->tags) = [
+        [$this->provider, $this->tags] = [
             $this->option('provider'),
             (array) $this->option('tag'),
         ];
@@ -101,7 +104,7 @@ class PublishCommand extends Command
     /**
      * @return void
      */
-    protected function promptForProviderOrTag()
+    protected function promptForProviderOrTag(): void
     {
         $choice = $this->choice(
             "Which provider or tag's files would you like to publish?",
@@ -140,9 +143,9 @@ class PublishCommand extends Command
      *
      * @return void
      */
-    protected function parseChoice($choice)
+    protected function parseChoice(string $choice): void
     {
-        list($type, $value) = explode(': ', strip_tags($choice));
+        [$type, $value] = explode(': ', strip_tags($choice));
 
         if ($type === 'Provider') {
             $this->provider = $value;
@@ -155,11 +158,12 @@ class PublishCommand extends Command
      * @param string|null $tag
      *
      * @return void
+     *
      * @throws \InvalidArgumentException
      * @throws \League\Flysystem\FilesystemNotFoundException
      * @throws \LogicException
      */
-    protected function publishTag(string $tag = null)
+    protected function publishTag(string $tag = null): void
     {
         foreach ($this->pathsToPublish($tag) as $from => $to) {
             $this->publishItem($from, $to);
@@ -181,11 +185,12 @@ class PublishCommand extends Command
      * @param string $to
      *
      * @return void
+     *
      * @throws \InvalidArgumentException
      * @throws \League\Flysystem\FilesystemNotFoundException
      * @throws \LogicException
      */
-    protected function publishItem(string $from, string $to)
+    protected function publishItem(string $from, string $to): void
     {
         if ($this->files->isFile($from)) {
             $this->publishFile($from, $to);
@@ -208,7 +213,7 @@ class PublishCommand extends Command
      *
      * @return void
      */
-    protected function publishFile(string $from, string $to)
+    protected function publishFile(string $from, string $to): void
     {
         if (!$this->files->exists($to) || $this->option('force')) {
             $this->createParentDirectory(dirname($to));
@@ -224,11 +229,12 @@ class PublishCommand extends Command
      * @param string $to
      *
      * @return void
+     *
      * @throws \InvalidArgumentException
      * @throws \League\Flysystem\FilesystemNotFoundException
      * @throws \LogicException
      */
-    protected function publishDirectory(string $from, string $to)
+    protected function publishDirectory(string $from, string $to): void
     {
         $this->moveManagedFiles(new MountManager([
             'from' => new Flysystem(new LocalAdapter($from)),
@@ -242,10 +248,11 @@ class PublishCommand extends Command
      * @param \League\Flysystem\MountManager $manager
      *
      * @return void
+     *
      * @throws \InvalidArgumentException
      * @throws \League\Flysystem\FilesystemNotFoundException
      */
-    protected function moveManagedFiles(MountManager $manager)
+    protected function moveManagedFiles(MountManager $manager): void
     {
         foreach ($manager->listContents('from://', true) as $file) {
             if ($file['type'] === 'file' &&
@@ -278,7 +285,7 @@ class PublishCommand extends Command
      *
      * @return void
      */
-    protected function status(string $from, string $to, string $type)
+    protected function status(string $from, string $to, string $type): void
     {
         $basePath = $this->laravel->basePath();
 

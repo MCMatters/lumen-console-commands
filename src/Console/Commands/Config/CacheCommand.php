@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\Config;
 
@@ -10,9 +10,10 @@ use Illuminate\Support\Arr;
 use Laravel\Lumen\Application;
 use LogicException;
 use Throwable;
-use const PHP_EOL;
-use const true;
+
 use function var_export;
+
+use const true, PHP_EOL;
 
 /**
  * Class CacheCommand
@@ -57,9 +58,10 @@ class CacheCommand extends Command
 
     /**
      * @return void
+     *
      * @throws \LogicException
      */
-    public function handle()
+    public function handle(): void
     {
         $this->call('config:clear');
 
@@ -87,7 +89,7 @@ class CacheCommand extends Command
      */
     protected function getFreshConfiguration(): array
     {
-        $app = require $this->app->basePath().'/bootstrap/app.php';
+        $app = require "{$this->app->basePath()}/bootstrap/app.php";
         $app->boot();
 
         return $app->make('config')->all();

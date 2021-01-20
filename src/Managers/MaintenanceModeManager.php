@@ -1,11 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Managers;
 
 use Laravel\Lumen\Application;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
 use function file_exists, touch, unlink;
 
 /**
@@ -48,9 +49,10 @@ class MaintenanceModeManager
 
     /**
      * @return void
+     *
      * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
      */
-    public function down()
+    public function down(): void
     {
         if ($this->isDown()) {
             return;
@@ -65,9 +67,10 @@ class MaintenanceModeManager
 
     /**
      * @return void
+     *
      * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
      */
-    public function up()
+    public function up(): void
     {
         if ($this->isUp()) {
             return;

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\Route;
 
@@ -45,9 +45,10 @@ class CacheCommand extends Command
 
     /**
      * @return void
+     *
      * @throws \LogicException
      */
-    public function handle()
+    public function handle(): void
     {
         $this->call('route:clear');
 
@@ -61,6 +62,7 @@ class CacheCommand extends Command
 
     /**
      * @return string
+     *
      * @throws \LogicException
      */
     protected function getContent(): string
@@ -74,11 +76,12 @@ class CacheCommand extends Command
 
     /**
      * @return array
+     *
      * @throws \LogicException
      */
     protected function getRoutes(): array
     {
-        $app = require $this->app->basePath().'/bootstrap/app.php';
+        $app = require "{$this->app->basePath()}/bootstrap/app.php";
         $app->boot();
 
         $routes = $app->router->getRoutes();
@@ -92,12 +95,14 @@ class CacheCommand extends Command
      * @param array $routes
      *
      * @return void
+     *
      * @throws \LogicException
      */
-    protected function checkRoutes(array $routes = [])
+    protected function checkRoutes(array $routes = []): void
     {
         foreach ($routes as $route) {
-            if ((!empty($route['action']['uses']) && $route['action']['uses'] instanceof Closure) ||
+            if (
+                (!empty($route['action']['uses']) && $route['action']['uses'] instanceof Closure) ||
                 (!empty($route['action'][0]) && $route['action'][0] instanceof Closure)
             ) {
                 throw new LogicException("Unable to cache route [{$route['uri']}]");

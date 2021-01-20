@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\Config;
 
@@ -52,7 +52,7 @@ class ClearCommand extends Command
     /**
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->files->delete(
             $this->app->make('config')->get('console-commands.cache.config')

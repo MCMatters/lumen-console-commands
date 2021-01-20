@@ -1,13 +1,15 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands;
 
 use Laravel\Lumen\Application as BaseApplication;
 use McMatters\LumenConsoleCommands\Managers\MaintenanceModeManager;
-use const false, true;
+
 use function file_exists;
+
+use const false, true;
 
 /**
  * Class Application

@@ -1,11 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\Route;
 
 use Illuminate\Console\Command;
 use Laravel\Lumen\Application;
+
 use function file_exists, unlink;
 
 /**
@@ -45,7 +46,7 @@ class ClearCommand extends Command
     /**
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         if (!file_exists($this->path) || @unlink($this->path)) {
             $this->info('Route cache cleared.');

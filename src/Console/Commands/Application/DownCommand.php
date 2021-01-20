@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\Application;
 
@@ -38,9 +38,10 @@ class DownCommand extends Command
 
     /**
      * @return void
+     *
      * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
      */
-    public function handle()
+    public function handle(): void
     {
         if ($this->manager->isDown()) {
             $this->info('Application is already in maintenance mode');

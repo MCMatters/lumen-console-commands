@@ -1,11 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\Application;
 
 use Illuminate\Console\Command;
 use Laravel\Lumen\Application;
+
 use function file_exists;
 
 /**
@@ -51,7 +52,7 @@ class StorageLinkCommand extends Command
     /**
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $publicPath = $this->app->basePath('public/storage');
 

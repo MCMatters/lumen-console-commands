@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\View;
 
@@ -47,7 +47,7 @@ class CacheCommand extends Command
     /**
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->call('view:clear');
 
@@ -62,9 +62,10 @@ class CacheCommand extends Command
      * @param \Illuminate\Support\Collection $views
      *
      * @return void
+     *
      * @throws \InvalidArgumentException
      */
-    protected function compileViews(Collection $views)
+    protected function compileViews(Collection $views): void
     {
         /** @var \Illuminate\View\Compilers\BladeCompiler $compiler */
         $compiler = $this->view
@@ -81,6 +82,7 @@ class CacheCommand extends Command
      * @param array $paths
      *
      * @return \Illuminate\Support\Collection
+     *
      * @throws \InvalidArgumentException
      */
     protected function bladeFilesIn(array $paths): Collection

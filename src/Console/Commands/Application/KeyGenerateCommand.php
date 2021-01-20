@@ -1,17 +1,19 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\Application;
 
-use Dotenv\Loader;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Encryption\Encrypter;
 use Laravel\Lumen\Application;
-use const false;
+
 use function base64_encode, env, file_exists, file_get_contents,
-    file_put_contents, preg_replace, preg_quote, random_bytes;
+    file_put_contents, preg_replace, preg_quote;
+
+use const false;
 
 /**
  * Class KeyGenerateCommand
@@ -54,10 +56,11 @@ class KeyGenerateCommand extends Command
 
     /**
      * @return void
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \Exception
      */
-    public function handle()
+    public function handle(): void
     {
         $key = $this->generateKey();
 
@@ -77,22 +80,19 @@ class KeyGenerateCommand extends Command
             return;
         }
 
-        $this->updateAppKey($key);
-
         $this->info("Application key [$key] set successfully.");
     }
 
     /**
      * @return string
+     *
      * @throws \Exception
      */
     protected function generateKey(): string
     {
-        $bytes = $this->config->get('app.cipher') === 'AES-128-CBC'
-            ? 16
-            : 32;
+        $key = Encrypter::generateKey($this->config->get('app.cipher', 'AES-128-CBC'));
 
-        return 'base64:'.base64_encode(random_bytes($bytes));
+        return 'base64:'.base64_encode($key);
     }
 
     /**
@@ -108,7 +108,8 @@ class KeyGenerateCommand extends Command
      * @param string $key
      *
      * @return bool|int
-     * @throws FileNotFoundException
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function writeKey(string $key)
     {
@@ -136,14 +137,15 @@ class KeyGenerateCommand extends Command
     /**
      * @return string|null
      */
-    protected function getCurrentKey()
+    protected function getCurrentKey(): ?string
     {
         return env('APP_KEY', $this->config->get('app.key'));
     }
 
     /**
      * @return string
-     * @throws FileNotFoundException
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function getEnvironmentFile(): string
     {
@@ -157,20 +159,5 @@ class KeyGenerateCommand extends Command
         }
 
         return $file;
-    }
-
-    /**
-     * @param string $key
-     *
-     * @throws FileNotFoundException
-     */
-    protected function updateAppKey(string $key)
-    {
-        $this->config->set('app.key', $key);
-
-        (new Loader($this->getEnvironmentFile(), true))->setEnvironmentVariable(
-            'APP_KEY',
-            $key
-        );
     }
 }

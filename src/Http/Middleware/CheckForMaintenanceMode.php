@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Http\Middleware;
 
-use McMatters\LumenConsoleCommands\Exceptions\MaintenanceModeException;
-use McMatters\LumenConsoleCommands\Managers\MaintenanceModeManager;
 use Closure;
 use Illuminate\Http\Request;
+use McMatters\LumenConsoleCommands\Exceptions\MaintenanceModeException;
+use McMatters\LumenConsoleCommands\Managers\MaintenanceModeManager;
 
 /**
  * Class CheckForMaintenanceMode
@@ -22,6 +22,7 @@ class CheckForMaintenanceMode
      * @param \McMatters\LumenConsoleCommands\Managers\MaintenanceModeManager $manager
      *
      * @return mixed
+     *
      * @throws \McMatters\LumenConsoleCommands\Exceptions\MaintenanceModeException
      */
     public function handle(

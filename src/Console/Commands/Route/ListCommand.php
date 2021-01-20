@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenConsoleCommands\Console\Commands\Route;
 
@@ -8,8 +8,10 @@ use Illuminate\Console\Command;
 use Laravel\Lumen\Application;
 use McMatters\LumenHelpers\RouteHelper;
 use Symfony\Component\Console\Input\InputOption;
-use const null;
+
 use function array_filter, array_map, implode, is_array;
+
+use const null;
 
 /**
  * Class ListCommand
@@ -53,7 +55,7 @@ class ListCommand extends Command
     /**
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->table($this->headers, $this->getRoutes());
     }
