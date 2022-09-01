@@ -13,7 +13,8 @@ use Throwable;
 
 use function var_export;
 
-use const true, PHP_EOL;
+use const PHP_EOL;
+use const true;
 
 /**
  * Class CacheCommand

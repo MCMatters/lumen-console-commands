@@ -7,7 +7,8 @@ namespace McMatters\LumenConsoleCommands\Console\Commands\Route;
 use Illuminate\Console\Command;
 use Laravel\Lumen\Application;
 
-use function file_exists, unlink;
+use function file_exists;
+use function unlink;
 
 /**
  * Class ClearCommand

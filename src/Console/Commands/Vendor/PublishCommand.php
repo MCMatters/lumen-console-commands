@@ -12,9 +12,16 @@ use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 
-use function array_merge, dirname, explode, preg_filter, realpath, strip_tags, str_replace;
+use function array_merge;
+use function dirname;
+use function explode;
+use function preg_filter;
+use function realpath;
+use function strip_tags;
+use function str_replace;
 
-use const null, true;
+use const null;
+use const true;
 
 /**
  * Class PublishCommand

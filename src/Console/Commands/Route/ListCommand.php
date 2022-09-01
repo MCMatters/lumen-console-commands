@@ -9,7 +9,10 @@ use Laravel\Lumen\Application;
 use McMatters\LumenHelpers\RouteHelper;
 use Symfony\Component\Console\Input\InputOption;
 
-use function array_filter, array_map, implode, is_array;
+use function array_filter;
+use function array_map;
+use function implode;
+use function is_array;
 
 use const null;
 
@@ -74,7 +77,7 @@ class ListCommand extends Command
             'Closure'
         );
 
-        return array_map(function (array $route) {
+        return array_map(static function (array $route) {
             if (is_array($route['middleware'])) {
                 $route['middleware'] = implode(',', $route['middleware']);
             }

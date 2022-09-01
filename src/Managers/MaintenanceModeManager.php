@@ -7,7 +7,9 @@ namespace McMatters\LumenConsoleCommands\Managers;
 use Laravel\Lumen\Application;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-use function file_exists, touch, unlink;
+use function file_exists;
+use function touch;
+use function unlink;
 
 /**
  * Class MaintenanceModeManager
@@ -76,7 +78,7 @@ class MaintenanceModeManager
             return;
         }
 
-        if (!unlink($this->file)) {
+        if (!@unlink($this->file)) {
             throw new FileException(
                 'Something went wrong on trying to remove maintenance file'
             );

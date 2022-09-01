@@ -9,7 +9,8 @@ use McMatters\LumenConsoleCommands\Managers\MaintenanceModeManager;
 
 use function file_exists;
 
-use const false, true;
+use const false;
+use const true;
 
 /**
  * Class Application

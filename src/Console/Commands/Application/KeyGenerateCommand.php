@@ -10,8 +10,13 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Encryption\Encrypter;
 use Laravel\Lumen\Application;
 
-use function base64_encode, env, file_exists, file_get_contents,
-    file_put_contents, preg_replace, preg_quote;
+use function base64_encode;
+use function env;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function preg_replace;
+use function preg_quote;
 
 use const false;
 

@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace McMatters\LumenConsoleCommands;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use McMatters\LumenConsoleCommands\Console\Commands\{
-    Application\DownCommand, Application\KeyGenerateCommand,
-    Application\StorageLinkCommand, Application\UpCommand,
-    Config\CacheCommand as ConfigCacheCommand, Config\ClearCommand as ConfigClearCommand,
-    Route\CacheCommand as RouteCacheCommand, Route\ClearCommand as RouteClearCommand,
-    Route\ListCommand as RouteListCommand, Vendor\PublishCommand,
-    View\CacheCommand as ViewCacheCommand, View\ClearCommand as ViewClearCommand
-};
+use McMatters\LumenConsoleCommands\Console\Commands\Application\DownCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\Application\KeyGenerateCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\Application\StorageLinkCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\Application\UpCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\Config\CacheCommand as ConfigCacheCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\Config\ClearCommand as ConfigClearCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\Route\CacheCommand as RouteCacheCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\Route\ClearCommand as RouteClearCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\Route\ListCommand as RouteListCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\Vendor\PublishCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\View\CacheCommand as ViewCacheCommand;
+use McMatters\LumenConsoleCommands\Console\Commands\View\ClearCommand as ViewClearCommand;
 use McMatters\LumenConsoleCommands\Managers\MaintenanceModeManager;
 
 /**

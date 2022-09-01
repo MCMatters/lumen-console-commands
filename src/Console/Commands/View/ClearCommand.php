@@ -7,7 +7,10 @@ namespace McMatters\LumenConsoleCommands\Console\Commands\View;
 use Illuminate\Console\Command;
 use Laravel\Lumen\Application;
 
-use function glob, is_file, preg_quote, unlink;
+use function glob;
+use function is_file;
+use function preg_quote;
+use function unlink;
 
 /**
  * Class ClearCommand
